@@ -1,68 +1,48 @@
-# 🏠 Prevendo Valores de Imóveis com Regressão Linear
+# House Price Regression
 
-Este projeto tem como objetivo precificar o valor de venda de imóveis utilizando um modelo de Regressão Linear. Além disso, exploramos quais fatores melhor explicam o valor dessas propriedades, permitindo uma melhor compreensão do mercado imobiliário.
+**Compare interpretable linear models and inspect the limits of house-price prediction.**
 
-## 📌 Etapas do Projeto
+This educational notebook explores property attributes, fits ordinary least-squares models, examines multicollinearity and residuals, and predicts prices for a bundled set of new houses. It is not a property appraisal service.
 
-O projeto foi desenvolvido seguindo os seguintes passos:
+## Reproduced result
 
-1. 📥 **Importação das Bibliotecas**: Utilização de bibliotecas essenciais para análise de dados e machine learning.
-2. 📂 **Carregamento dos Dados**: Importação e inspeção do conjunto de dados.
-3. 🔄 **Pré-processamento**:
-   - ❌ Remoção de colunas irrelevantes (exemplo: ID dos imóveis).
-   - 🛠️ Tratamento de valores nulos e inconsistentes.
-4. 📊 **Análise Exploratória**:
-   - 🔎 Cálculo da correlação entre as variáveis.
-   - 📉 Visualização de distribuições e relações entre variáveis.
-5. ✂️ **Divisão dos Dados**:
-   - 📏 Separar os dados em conjunto de treino e teste.
-6. 🤖 **Treinamento do Modelo**:
-   - 🔢 Aplicar a Regressão Linear para prever os preços de venda.
-7. 📈 **Avaliação do Modelo**:
-   - 📌 Cálculo de métricas de desempenho para avaliar a qualidade do modelo.
+| Final model measurement | Value |
+| --- | --- |
+| Training R² | 0.6511 |
+| Held-out test R² | 0.6432 |
+| Test split | 30%, random_state=230 |
 
-## 💾 Como Baixar e Executar o Projeto
+Values were reproduced during review using the notebook's existing split and model. R² is not percentage prediction accuracy. Model selection is exploratory; there is no untouched external validation set or deployed prediction API.
 
-### 🔧 Requisitos
+## Model inputs
 
-- 🐍 Python 3.7+
-- 📦 Bibliotecas listadas no arquivo `requirements.txt`
-- 🏗️ (Opcional) Anaconda para gerenciamento de ambientes
+The final model uses first-floor area, the presence of a second floor, bathroom count, and an excellent-kitchen indicator, plus an intercept. The notebook compares this with larger specifications and computes variance inflation factors.
 
-### 🚀 Instalação
+## Run locally
 
-1. Clone este repositório:
-   ```bash
-   git clone https://github.com/seu-usuario/prevendo-valores-imoveis.git
-   ```
-2. Acesse a pasta do projeto:
-   ```bash
-   cd prevendo-valores-imoveis
-   ```
-3. Crie um ambiente virtual e instale as dependências:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # No Windows, use venv\Scripts\activate
-   pip install -r requirements.txt
-   ```
-4. Execute o Jupyter Notebook:
-   ```bash
-   jupyter notebook
-   ```
-5. Abra o arquivo `.ipynb` e execute as células.
+```bash
+git clone https://github.com/joaovitormessias/prevendo-valores-de-imoveis.git
+cd prevendo-valores-de-imoveis
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+jupyter notebook prevendoValoresDeImoveis.ipynb
+```
 
-## ✨ Possíveis Melhorias
+If Jupyter is not available in your environment, install it with `pip install jupyter`. Run from the repository directory so the relative `dataset/` paths resolve.
 
-- 🏗️ Testar outros modelos de regressão (Ex: Regressão Ridge, Lasso, Random Forest Regressor).
-- 🔍 Explorar feature engineering para melhorar a previsão.
-- 🤖 Implementar um pipeline automatizado para treinamentos futuros.
-- 🌐 Criar uma API para disponibilizar as previsões de forma online.
+## Review the analysis
 
-## 🤝 Contribuição
+- [Notebook](prevendoValoresDeImoveis.ipynb): EDA, train/test split, OLS comparisons, predictions, VIF, and residual plots.
+- [Training data](dataset/Preços_de_casas.csv): bundled input data.
+- [New houses](dataset/Novas_casas.csv): illustrative prediction inputs.
 
-Caso queira contribuir com melhorias, fique à vontade para abrir um PR ou sugerir mudanças via issues.
+The single-house prediction now passes a DataFrame to the formula-based model, preserving named-column lookup. The test-R² comment is corrected to distinguish held-out evaluation from training fit.
 
-## 📜 Licença
+## Verification and limitations
 
-Este projeto está sob a licença MIT. Sinta-se livre para usá-lo e melhorá-lo!
+All 58 nonempty code cells executed sequentially during review, with chart display suppressed. Interactive plots were not visually checked. Dataset provenance, units, representativeness, and collection methodology need better source documentation before interpreting prices operationally.
 
+Coefficients are associations, not causal effects. Add a naive baseline, MAE/RMSE, cross-validation, and prediction-interval assessment before comparing practical usefulness. Residual and collinearity diagnostics do not establish production reliability.
+
+[MIT license](LICENSE) · [Maintainer](https://github.com/joaovitormessias)
